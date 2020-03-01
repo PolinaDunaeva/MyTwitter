@@ -1,0 +1,11 @@
+commit 52d2ec8ea9a9d37ab3108bc0f8572dde2ed2919f (HEAD -> dev)
+Author: PolinaDunaeva <dunaevapolinaflower@gmail.com>
+Date:   Sun Feb 16 16:00:40 2020 +0300
+
+    feat: add status.txt
+
+commit 43aa54e5210392a5b151c59d4e34eba6662f17f2
+Author: PolinaDunaeva <dunaevapolinaflower@gmail.com>
+Date:   Sun Feb 16 15:52:55 2020 +0300
+
+    feat: add .gitignore
