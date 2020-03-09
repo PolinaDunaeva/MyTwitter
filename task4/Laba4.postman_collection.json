@@ -1,0 +1,352 @@
+{
+	"info": {
+		"_postman_id": "b0cc92c8-4b03-4460-a018-34baf92e9f33",
+		"name": "Laba4",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "HTTP Cat",
+			"item": [
+				{
+					"name": "Get cat404",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://http.cat/404",
+							"protocol": "https",
+							"host": [
+								"http",
+								"cat"
+							],
+							"path": [
+								"404"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cat101",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://http.cat/101",
+							"protocol": "https",
+							"host": [
+								"http",
+								"cat"
+							],
+							"path": [
+								"101"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get cat406",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://http.cat/406",
+							"protocol": "https",
+							"host": [
+								"http",
+								"cat"
+							],
+							"path": [
+								"406"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Recipe Puppy",
+			"item": [
+				{
+					"name": "Get recipe omelet",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.recipepuppy.com/api/?i=onions,garlic&q=omelet",
+							"protocol": "http",
+							"host": [
+								"www",
+								"recipepuppy",
+								"com"
+							],
+							"path": [
+								"api",
+								""
+							],
+							"query": [
+								{
+									"key": "i",
+									"value": "onions,garlic"
+								},
+								{
+									"key": "q",
+									"value": "omelet"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get recipe dessert",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.recipepuppy.com/api/?i=banana&q=dessert",
+							"protocol": "http",
+							"host": [
+								"www",
+								"recipepuppy",
+								"com"
+							],
+							"path": [
+								"api",
+								""
+							],
+							"query": [
+								{
+									"key": "i",
+									"value": "banana"
+								},
+								{
+									"key": "q",
+									"value": "dessert"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get recipe soup",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://www.recipepuppy.com/api/?i=tomato&q=soup",
+							"protocol": "http",
+							"host": [
+								"www",
+								"recipepuppy",
+								"com"
+							],
+							"path": [
+								"api",
+								""
+							],
+							"query": [
+								{
+									"key": "i",
+									"value": "tomato"
+								},
+								{
+									"key": "q",
+									"value": "soup"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Makeup",
+			"item": [
+				{
+					"name": "Get brand Maybelline",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://makeup-api.herokuapp.com/api/v1/products.json?brand=maybelline",
+							"protocol": "http",
+							"host": [
+								"makeup-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products.json"
+							],
+							"query": [
+								{
+									"key": "brand",
+									"value": "maybelline"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get lipstick",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://makeup-api.herokuapp.com/api/v1/products.json?brand=covergirl&product_type=lipstick ",
+							"protocol": "http",
+							"host": [
+								"makeup-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products.json"
+							],
+							"query": [
+								{
+									"key": "brand",
+									"value": "covergirl"
+								},
+								{
+									"key": "product_type",
+									"value": "lipstick "
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get eyeliner",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://makeup-api.herokuapp.com/api/v1/products.json?brand=covergirl&product_type=eyeliner",
+							"protocol": "http",
+							"host": [
+								"makeup-api",
+								"herokuapp",
+								"com"
+							],
+							"path": [
+								"api",
+								"v1",
+								"products.json"
+							],
+							"query": [
+								{
+									"key": "brand",
+									"value": "covergirl"
+								},
+								{
+									"key": "product_type",
+									"value": "eyeliner"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		},
+		{
+			"name": "Twitter",
+			"item": [
+				{
+					"name": "Get oauth/authenticate",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.twitter.com/oauth/authenticate?oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik",
+							"protocol": "https",
+							"host": [
+								"api",
+								"twitter",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"authenticate"
+							],
+							"query": [
+								{
+									"key": "oauth_token",
+									"value": "Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get oauth/authorize",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://api.twitter.com/oauth/authorize?oauth_token=Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik",
+							"protocol": "https",
+							"host": [
+								"api",
+								"twitter",
+								"com"
+							],
+							"path": [
+								"oauth",
+								"authorize"
+							],
+							"query": [
+								{
+									"key": "oauth_token",
+									"value": "Z6eEdO8MOmk394WozF5oKyuAv855l4Mlqo7hhlSLik"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post oauth2/token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "https://api.twitter.com/oauth2/token HTTP/1.1",
+							"protocol": "https",
+							"host": [
+								"api",
+								"twitter",
+								"com"
+							],
+							"path": [
+								"oauth2",
+								"token HTTP",
+								"1.1"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
