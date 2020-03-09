@@ -1,0 +1,267 @@
+html {
+  font-size: 12px;
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 7px;
+  }
+}
+
+@media (min-width: 1900px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.photo {
+  width: 20rem;
+  height: 20rem;
+}
+
+header {
+  clear: both;
+  text-align: right;
+  background-color: #131417;
+  position: fixed;
+  width: 100%;
+  height: 7rem;
+}
+
+header a.header-logo {
+  color: #fff;
+  font-size: 2.5rem;
+  text-decoration: none;
+  float: left;
+  padding-top: 1.7rem;
+  padding-left: 2.5rem;
+}
+header a.header-logo span {
+  color: #d94f54;
+}
+
+header .menu li {
+  padding-left: 0.83rem;
+  padding-right: 0.83rem;
+  padding-bottom: 0.83rem;
+}
+header .menu li a {
+  color: #bcc9dd;
+}
+
+header .menu {
+  display: inline-block;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+li {
+  list-style-type: none;
+  text-align: center;
+}
+
+.left_menu ul li a {
+  display: inline-block;
+  color: #d94f54;
+  line-height: 1;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 2.083rem;
+  padding-top: 0.417rem;
+  padding-bottom: 0.417rem;
+}
+
+.left_menu ul li a:after {
+  background-color: #d94f54;
+  display: block;
+  content: "";
+  height: 0.167rem;
+  width: 0%;
+  -webkit-transition: width 0.3s ease-in-out;
+  -moz--transition: width 0.3s ease-in-out;
+  transition: width 0.3s ease-in-out;
+}
+.left_menu ul li a:hover:after,
+.left_menu ul li a:focus:after {
+  width: 100%;
+}
+
+.left_menu {
+  float: left;
+  width: 24%;
+  margin-left: 1%;
+  margin-top: 10rem;
+}
+
+.check {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+  font-size: 1.7rem;
+  color: #fff;
+}
+
+.filter {
+  background-color: #131417;
+  height: 11rem;
+  margin-left: 13%;
+  border: 0.167rem solid #fff;
+  border-radius: 0.67rem;
+  padding-top: 1rem;
+  text-align: center;
+  /* display: none; когда добавится js, он будет показывать этот блок при нажатии на кнопку "Поиск". 
+     На данный момент я не убирала этот блок, чтобы продемонстрировать его работу*/
+}
+
+body {
+  font-family: Raleway, Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: #1c1d22;
+}
+
+.container {
+  width: 90%;
+  max-width: 108.33rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.brand {
+  font-size: 2.5rem;
+}
+
+.menu li {
+  float: left;
+  font-size: 1.33rem;
+  list-style: none;
+}
+.menu {
+  padding-left: 0;
+  margin: 0;
+}
+
+.menu li a {
+  text-decoration: none;
+}
+
+.right {
+  float: right;
+  width: 74%;
+}
+
+.right-aside {
+  background-color: #1c1d22;
+  color: #fff;
+  margin: 0px;
+  width: 69.5%;
+  overflow: auto;
+  padding-top: 8%;
+}
+
+.right-aside nav {
+  text-align: right;
+  padding-top: 1.67rem;
+  padding-right: 3.33rem;
+}
+.right-aside div {
+  text-align: center;
+  padding: 1.67rem;
+}
+.right-aside article div {
+  text-align: right;
+  padding: 0px;
+}
+
+.right-aside article {
+  width: 70%;
+  background-color: #131417;
+  padding: 1.8rem 5% 0.83rem 7%;
+  border: 0.25rem solid #fff;
+  border-radius: 8.33rem 1.25rem 8.33rem 1.25rem;
+  margin: 5% 7%;
+  margin-top: 4rem;
+}
+
+p b a{
+  text-decoration: none;
+  color: #fff;
+}
+
+.nam {
+  font-size: 1.5rem;
+}
+
+.buttonDownload {
+  border: 0.167rem solid #fff;
+  border-radius: 0.67rem;
+  background: #131417;
+  color: #fff;
+  cursor: pointer;
+  font-size: 1.25rem;
+}
+
+.buttonStar {
+  border: #fff;
+  border-radius: 0.5rem;
+  background: #d94f54;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.2rem;
+}
+
+.buttonCreate {
+  border: 0.167rem solid #fff;
+  border-radius: 0.67rem;
+  background: #fff;
+  color: #d94f54;
+  cursor: pointer;
+  font-size: 1.67rem;
+}
+
+.buttonModify {
+  border: #d94f54;
+  border-radius: 0.4167rem;
+  background: #d94f54;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.Create {
+  text-align: center;
+  padding-left: 13%;
+  padding-bottom: 3rem;
+}
+
+.name {
+  margin-top: 0px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.footer {
+  flex: 0 0 auto;
+}
+
+footer {
+  clear: both;
+  text-align: center;
+  background-color: #131417;
+}
+
+footer .menu li {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+footer .menu li a {
+  color: #bcc9dd;
+}
+
+footer .menu {
+  display: inline-block;
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
