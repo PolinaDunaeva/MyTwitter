@@ -1,0 +1,14 @@
+{
+    "env":{
+        "es6": true
+    },
+
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+
+    "rules":{
+        "quotes": ["error", "double"]
+    }
+
+}
+
