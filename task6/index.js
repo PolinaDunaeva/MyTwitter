@@ -2,8 +2,7 @@
 var posts = [
   {
     id: "1",
-    description:
-      "Привет всем!",
+    description: "Привет всем!",
     createdAt: new Date(2020, 3, 6, 14, 51),
     author: "Соболевский",
     photoLink:
@@ -22,8 +21,7 @@ var posts = [
   },
   {
     id: "3",
-    description:
-      "Минское «Динамо»",
+    description: "Минское «Динамо»",
     createdAt: new Date(2017, 2, 27, 20, 1),
     author: "Иван Иванов",
     hashTags: ["КХЛ", "хоккей", "спорт"],
@@ -36,7 +34,7 @@ var posts = [
     description:
       "Министр Заяц гарантирует Данкверту, что тот вернется в Россию после визита в Беларусь.",
     createdAt: new Date(2016, 11, 1, 14, 12),
-    author: "Похомчик",
+    author: "Анна",
     hashTags: ["сельское", "хозяйство", "Беларусь"],
     photoLink:
       "https://stellanews.ru/wp-content/uploads/2019/07/efbed271dac3bf418934c5f318996c0e.jpg",
@@ -86,14 +84,15 @@ var posts = [
   },
   {
     id: "9",
-    description:"Стройка остановлена, лагерь свернут: противостояние в Куропатах закончено",
+    description:
+      "Стройка остановлена, лагерь свернут: противостояние в Куропатах закончено",
     createdAt: new Date(2019, 3, 6, 16, 11),
     author: "Петровский",
     hashTags: ["Минск", "стройка", "протест"],
     photoLink:
       "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
     likes: ["Соболевский", "Петровский"]
-  },
+  }, 
   {
     id: "10",
     description: "Южнокорейские военные сообщили о запуске ракеты КНДР",
@@ -127,8 +126,7 @@ var posts = [
   },
   {
     id: "13",
-    description:
-      "Минское «Динамо»",
+    description: "Минское «Динамо»",
     createdAt: new Date(2016, 2, 27, 20, 51),
     author: "Иванов",
     photoLink:
@@ -180,8 +178,7 @@ var posts = [
   },
   {
     id: "18",
-    description:
-      "Взрыв в Гродно!",
+    description: "Взрыв в Гродно!",
     createdAt: new Date(2016, 11, 5, 20, 36),
     author: "Анна",
     hashTags: ["взрыв", "Гродно"],
@@ -212,126 +209,115 @@ var posts = [
   }
 ];
 
-var hashTags = [
-  "криминал",
-  "суд",
-  "Минск",
-  "торги",
-  "экономика",
-  "КХЛ",
-  "хоккей",
-  "спорт",
-  "сельское",
-  "хозяйство",
-  "Беларусь",
-  "минсктранс",
-  "указ",
-  "Беларусь",
-  "Брест",
-  "марш",
-  "взрыв",
-  "Гродно",
-  "стройка",
-  "протест",
-  "КНДР",
-  "Корея",
-  "политика"
-];
+function sortByDate(posts) {
+  return posts.sort((a, b) =>
+    a.createdAt.getTime() > b.createdAt.getTime() ? -1 : 1
+  );
+}
 
-function getposts(skip, top, filterConfig) {
+function getPosts(skip, top, filterConfig) {
   var result = posts;
   var from = skip || 0;
   var number = top || 10;
-  
+
   if (filterConfig) {
     if (filterConfig.author) {
       result = result.filter(function(element) {
-        return element.author == filterConfig.author;
-      })
+        if (element.author.includes(filterConfig.author)) return element.author;
+      });
     }
     if (filterConfig.dateFrom) {
       result = result.filter(function(element) {
-        return element.createdAt.getTime() >= filterConfig.dateFrom.getTime();
-      })
+        return element.createdAt >= filterConfig.dateFrom;
+      });
     }
     if (filterConfig.dateTo) {
       result = result.filter(function(element) {
-        return element.createdAt.getTime() <= filterConfig.dateTo.getTime();
-      })
+        return element.createdAt <= filterConfig.dateTo;
+      });
     }
 
-    if (filterConfig.hashTags && filterConfig.hashTags.length != 0) {
+    if (filterConfig.hashTags) {
       result = result.filter(function(element) {
-        if(typeof element.hashtags === "undefined") {
-         }
-        return filterConfig.hashTags.every(function(tag) {
-          return element.hashTags.indexOf(tag) >= 0;
-        })
-      })
+        if (filterConfig.hashTags.every(tag => element.hashTags.includes(tag)))
+          return element.hashTags;
+      });
     }
   }
+  result = sortByDate(result);
   return result.slice(from, from + number);
 }
 
-function getpost(findId) {
-  return posts.filter(function(element) {
-    return element.id == findId;
-  })[0];
+function getPost(id) {
+  return posts.find(x => x.id === id);
 }
 
-function validatepost(post) {
-  if (!post.id) {
-    return false;
-  } else if ( !post.description || post.description.length == 0 || post.description.length > 200) {
-    return false;
-  } else if (!post.createdAt || post.createdAt.length == 0) {
-    return false;
-  } else if (!post.author || post.author.length == 0) {
-    return false;
-  }  else {
-    return true;
-  }
-}
+function validatePost(post) {
+  if (post) {
+    if (!post.description) return false;
 
-function addpost(post) {
-  var prevSize = posts.length;
-  if (!validatepost(post)) {
-    return false;
-  } else if (prevSize == posts.push(post)) {
-    return false;
-  } else {
-    return true;
-  }
-}
+    if (post.description) {
+      if (
+        post.description.length > 200 ||
+        typeof post.description !== "string"
+      )
+        return false;
+    }
 
-function removepost(removeId) {
-  var removeIndex = posts.indexOf(getpost(removeId));
-  if (removeIndex != -1) {
-    posts.splice(removeIndex, 1);
-    return true;
-  } else {
-    return false;
-  }
-}
+    if (post.hashtags) {
+      if (post.hashtags.some(hashtag => typeof hashtag !== "string"))
+        return false;
+    }
 
-function editpost(editId, post) {
-  var editIndex = posts.indexOf(getpost(editId));
-  if (!validatepost(post) || editIndex < 0) {
-    return false;
-  }
-  if (post.description) {
-    posts[editIndex].description = post.description;
-  }
-  if (post.hashTags) {
-    posts[editIndex].hashTags = post.hashTags;
-  }
-  if (post.photoLink) {
-    posts[editIndex].photoLink = post.photoLink;
-  }
-  if (post.likes) {
-    posts[editIndex].likes = post.likes;
+    if (post.photoLink) {
+      if (typeof post.photoLink !== "string") return false;
+    }
   }
   return true;
+}
+
+function addPost(post) {
+  if (
+    !validatePost(post) ||
+    posts.find(x => x.id === post.id)
+  ) {
+    return false;
+  }
+  posts.push(post);
+  return true;
+}
+
+function removePost(id) {
+  if (posts.findIndex(post => post.id === id) !== -1) {
+    posts.splice(
+      posts.findIndex(post => post.id === id),
+      1
+    );
+    return true;
+  }
+  return false;
+}
+
+function editPost(id, post) {
+  if (!validatePost(post)) {
+    return false;
+  }
+
+  var newPost = getPost(id);
+
+  if (post.description) {
+    newPost.description = post.description;
+  }
+  if (post.photoLink) {
+    newPost.photoLink = post.photoLink;
+  }
+  if (post.hashtags) {
+    newPost.hashtags = post.hashtags;
+  }
+  if (validatePost(newPost)) {
+    return true;
+  }
+  return false;
 }
 
 var testST1 = {
@@ -349,7 +335,6 @@ var testST2 = {
   description: "в общем",
   createdAt: new Date(),
   author: "Петр",
-
   photoLink:
     "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
   likes: ["Соболевский", "Петровский", "Медсестра"]
@@ -402,75 +387,80 @@ var testFil4 = {
   hashTags: ["Беларусь"]
 };
 
-console.log("getpost(valid): ");
-console.log(getpost("5"));
-console.log("getpost(invalid): ");
-console.log(getpost("1337"));
+console.log("getPost(valid): ");
+console.log(getPost("5"));
+console.log("getPost(invalid): ");
+console.log(getPost("1337"));
 
-console.log("validatepost(valid): " + validatepost(getpost("2")));
-console.log("validatepost(invalid): " + validatepost(testST3));
+console.log("validatePost(valid): " + validatePost(getPost("2")));
 
-console.log("addpost(valid): " + addpost(testST1));
-console.log("addpost(valid): " + addpost(testST2));
-console.log("addpost(invalid): " + addpost(testST3));
-console.log("addpost(valid): " + addpost(testST4));
-console.log("addpost(valid): " + addpost(testST5));
+console.log("addPost(valid): " + addPost(testST1));
+console.log("addPost(valid): " + addPost(testST2));
+console.log("addPost(valid): " + addPost(testST4));
+console.log("addPost(valid): " + addPost(testST5));
 
-console.log("posts length after addpost(): " + posts.length);
-console.log("getpost(addedpost): ");
-console.log(getpost("21"));
-console.log(getpost("22"));
-console.log(getpost("23"));
-console.log(getpost("24"));
+console.log("posts length after addPost(): " + posts.length);
+console.log("getPost(addedpost): ");
+console.log(getPost("21"));
+console.log(getPost("22"));
+console.log(getPost("23"));
+console.log(getPost("24"));
 
-console.log("editpost(valid): " + editpost("21", testST2));
-console.log("editpost(invalid): " + editpost("250", testST2));
-console.log("editpost(valid): " + editpost("1", testST2));
+console.log("editPost(valid): " + editPost("1", testST2));
+console.log(
+  "editPost(valid): " + editPost("20", { description: "new description" })
+);
 
-console.log("getpost(editedpost): ");
-console.log(getpost("1"));
+console.log("getPost(editedpost): ");
+console.log(getPost("1"));
+console.log(getPost("20"));
 
-console.log("removepost(valid): " + removepost("22"));
-console.log("removepost(invalid): " + removepost("30"));
+console.log("removePost(valid): " + removePost("22"));
+console.log("removePost(invalid): " + removePost("30"));
 
-console.log("posts length after removepost(): " + posts.length);
+console.log("posts length after removePost(): " + posts.length);
 
-console.log("getposts(0, 10)(valid): ");
-getposts(0, 10).forEach(function(element) {
+console.log("getPosts(0, 10)(valid): ");
+getPosts(0, 10).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(10, 10)(valid): ");
-getposts(10, 10).forEach(function(element) {
+console.log("getPosts(10, 10)(valid): ");
+getPosts(10, 10).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(20, 10)(valid): ");
-getposts(20, 10).forEach(function(element) {
+console.log("getPosts(20, 10)(valid): ");
+getPosts(20, 10).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(0, 10, testFil1)(not found): ");
-getposts(0, 10, testFil1).forEach(function(element) {
+console.log("getPosts(0, 10, testFil1)(not found): ");
+getPosts(0, 10, testFil1).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(0, 10, testFil2)(valid): ");
-getposts(0, 10, testFil2).forEach(function(element) {
+console.log("getPosts(0, 10, testFil2)(valid): ");
+getPosts(0, 10, testFil2).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(0, 10, testFil3)(valid): ");
-getposts(0, 10, testFil3).forEach(function(element) {
+console.log("getPosts(0, 10, testFil3)(valid): ");
+getPosts(0, 10, testFil3).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(0, 10, testFil4)(valid): ");
-getposts(0, 10, testFil4).forEach(function(element) {
+console.log("getPosts(0, 10, testFil4)(valid): ");
+getPosts(0, 10, testFil4).forEach(function(element) {
   console.log(element);
 });
 
-console.log("getposts(0, 10, Автор:Медсестра)(valid): ");
-getposts(0, 10, { author: "Анна" }).forEach(function(element) {
+console.log("getPosts(0, 10, Автор:Анна)(valid): ");
+getPosts(0, 10, { author: "Анна" }).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, Автор по подстроке:Ан)(valid): ");
+getPosts(0, 10, { author: "Ан" }).forEach(function(element) {
   console.log(element);
 });
