@@ -1,127 +1,4 @@
-class PostsList {
-  _posts = [];
-
-  constructor(newPosts) {
-    this._posts = newPosts.concat();
-  }
-
-  getposts(skip, top, filterConfig) {
-    var result = this._posts;
-    var from = skip || 0;
-    var number = top || 10;
-
-    if (filterConfig) {
-      if (filterConfig.author) {
-        result = result.filter(function(element) {
-          return element.author == filterConfig.author;
-        });
-      }
-      if (filterConfig.dateFrom) {
-        result = result.filter(function(element) {
-          return element.createdAt.getTime() >= filterConfig.dateFrom.getTime();
-        });
-      }
-      if (filterConfig.dateTo) {
-        result = result.filter(function(element) {
-          return element.createdAt.getTime() <= filterConfig.dateTo.getTime();
-        });
-      }
-
-      if (filterConfig.hashTags && filterConfig.hashTags.length != 0) {
-        result = result.filter(function(element) {
-          if (typeof element.hashtags === "undefined") {
-          }
-          return filterConfig.hashTags.every(function(tag) {
-            return element.hashTags.indexOf(tag) >= 0;
-          });
-        });
-      }
-    }
-
-    return result.slice(from, from + number);
-  }
-
-  getpost(findId) {
-    return this._posts.filter(function(element) {
-      return element.id == findId;
-    })[0];
-  }
-
-  validatepost(post) {
-    if (!post.id) {
-      return false;
-    } else if (
-      !post.description ||
-      post.description.length == 0 ||
-      post.description.length > 200
-    ) {
-      return false;
-    } else if (!post.createdAt || post.createdAt.length == 0) {
-      return false;
-    } else if (!post.author || post.author.length == 0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  addAll(newPosts) {
-    var invalidPosts = [];
-
-    newPosts.forEach(post => {
-      if (!this.add(post)) invalidPosts.push(post);
-    });
-
-    return invalidPosts;
-  }
-
-  addpost(post) {
-    var prevSize = this._posts.length;
-    if (!PostsList.validatepost(post)) {
-      return false;
-    } else if (prevSize == this._posts.push(post)) {
-      return false;
-    } else {
-      return true;
-    }
-  }
-
-  removepost(removeId) {
-    var removeIndex = this._posts.indexOf(getpost(removeId));
-    if (removeIndex != -1) {
-      this._posts.splice(removeIndex, 1);
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  editpost(editId, post) {
-    var editIndex = this._posts.indexOf(getpost(editId));
-    if (!PostsList.validatepost(post) || editIndex < 0) {
-      return false;
-    }
-    if (post.description) {
-      this._posts[editIndex].description = post.description;
-    }
-    if (post.hashTags) {
-      this._posts[editIndex].hashTags = post.hashTags;
-    }
-    if (post.photoLink) {
-      this._posts[editIndex].photoLink = post.photoLink;
-    }
-    if (post.likes) {
-      this._posts[editIndex].likes = post.likes;
-    }
-    return true;
-  }
-
-  clear() {
-    this._posts = [];
-  }
-}
-
-var pl = new PostsList([
+var posts = [
   {
     id: "1",
     description: "Привет всем!",
@@ -329,34 +206,292 @@ var pl = new PostsList([
       "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
     likes: ["Соболевский", "Петровский", "Медсестра"]
   }
-]);
+];
+
+class PostsList {
+  _posts = [];
+  
+
+  constructor(posts) {
+    this._posts = posts || [];
+  }
+
+  static _sortByDate(posts) {
+    return posts.sort((a, b) =>
+      a.createdAt.getTime() > b.createdAt.getTime() ? -1 : 1
+    );
+  }
+
+  getPosts(skip, top, filterConfig) {
+    var result = this._posts;
+    var from = skip || 0;
+    var number = top || 10;
+
+    if (filterConfig) {
+      if (filterConfig.author) {
+        result = result.filter(function(element) {
+          if (element.author.includes(filterConfig.author))
+            return element.author;
+        });
+      }
+      if (filterConfig.dateFrom) {
+        result = result.filter(function(element) {
+          return element.createdAt >= filterConfig.dateFrom;
+        });
+      }
+      if (filterConfig.dateTo) {
+        result = result.filter(function(element) {
+          return element.createdAt <= filterConfig.dateTo;
+        });
+      }
+
+      if (filterConfig.hashTags) {
+        result = result.filter(function(element) {
+          if (
+            filterConfig.hashTags.every(tag => element.hashTags.includes(tag))
+          )
+            return element.hashTags;
+        });
+      }
+    }
+    result = PostsList._sortByDate(result);
+    return result.slice(from, from + number);
+  }
+
+  getPost(id) {
+    return this._posts.find(x => x.id === id);
+  }
+
+  static validatePost(post) {
+    if (post) {
+      if (!post.description) return false;
+
+      if (post.description) {
+        if (
+          post.description.length > 200 ||
+          typeof post.description !== "string"
+        )
+          return false;
+      }
+
+      if (post.hashtags) {
+        if (post.hashtags.some(hashtag => typeof hashtag !== "string"))
+          return false;
+      }
+
+      if (post.photoLink) {
+        if (typeof post.photoLink !== "string") return false;
+      }
+    }
+    return true;
+  }
+
+  addAll(posts) {
+    return posts.filter(post => !this.addPost(post));
+  }
+
+  addPost(post) {
+    if (
+      !PostsList.validatePost(post) ||
+      this._posts.find(x => x.id === post.id)
+    ) {
+      return false;
+    }
+    this._posts.push(post);
+    return true;
+  }
+
+  removePost(id) {
+    if (this._posts.findIndex(post => post.id === id) !== -1) {
+      this._posts.splice(
+        this._posts.findIndex(post => post.id === id),
+        1
+      );
+      return true;
+    }
+    return false;
+  }
+
+  editPost(id, post) {
+    if (!PostsList.validatePost(post)) {
+      return false;
+    }
+
+    var newPost = this.getPost(id);
+
+    if (post.description) {
+      newPost.description = post.description;
+    }
+    if (post.photoLink) {
+      newPost.photoLink = post.photoLink;
+    }
+    if (post.hashtags) {
+      newPost.hashtags = post.hashtags;
+    }
+    if (PostsList.validatePost(newPost)) {
+      return true;
+    }
+    return false;
+  }
+
+  clear() {
+    this._posts = [];
+  }
+}
+
+var myPosts = new PostsList(posts);
 
 var testST1 = {
-    id: "21",
-    description: "в общем ДА",
-    createdAt: new Date(),
-    author: "Петр",
-    hashTags: ["Беларусь", "политика"],
-    photoLink:
-      "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
-    likes: ["Соболевский", "Петровский", "Медсестра"]
-  };
+  id: "21",
+  description: "в общем ДА",
+  createdAt: new Date(),
+  author: "Петр",
+  hashTags: ["Беларусь", "политика"],
+  photoLink:
+    "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
+  likes: ["Соболевский", "Петровский", "Медсестра"]
+};
+var testST2 = {
+  id: "22",
+  description: "в общем",
+  createdAt: new Date(),
+  author: "Петр",
+  photoLink:
+    "https://img3.goodfon.ru/original/960x854/c/1e/tumannost-kosmos-zvezdy.jpg",
+  likes: ["Соболевский", "Петровский", "Медсестра"]
+};
 
-console.log("getpost(valid): ");
-console.log(pl.getpost("5"));
-console.log("getpost(invalid): ");
-console.log(pl.getpost("1337"));
-console.log("getposts(0, 10)(valid): ");
-pl.getposts(0, 10).forEach(function(element) {
+var testST3 = {
+  description: "Южнокорейские военные сообщили о запуске ракеты КНДР",
+  createdAt: new Date(),
+  author: "Брат Ким",
+  hashTags: ["КНДР", "Корея", "политика"],
+  photoLink:
+    "https://stellanews.ru/wp-content/uploads/2019/07/efbed271dac3bf418934c5f318996c0e.jpg",
+  likes: ["Соболевский", "Петровский", "Медсестра"]
+};
+
+var testST4 = {
+  id: "23",
+  description: "Южнокорейские военные сообщили о запуске ракеты КНДР",
+  createdAt: new Date(),
+  author: "Брат Ким",
+  hashTags: ["КНДР", "Корея", "политика"],
+  photoLink:
+    "https://stellanews.ru/wp-content/uploads/2019/07/efbed271dac3bf418934c5f318996c0e.jpg",
+  likes: ["Соболевский", "Петровский", "Медсестра"]
+};
+
+var testST5 = {
+  id: "24",
+  description: "Южнокорейский",
+  createdAt: new Date(),
+  author: "Петровский",
+  hashTags: ["Минск"]
+};
+
+var testFil1 = {
+  author: "Полина"
+};
+var testFil2 = {
+  dateFrom: new Date(2020, 2, 20),
+  dateTo: new Date(2020, 3, 20)
+};
+var testFil3 = {
+  author: "Петровский",
+  hashTags: ["Минск"]
+};
+var testFil4 = {
+  author: "Петровский",
+  dateFrom: new Date(2020, 1),
+  dateTo: new Date(2020, 4),
+  hashTags: ["Беларусь"]
+};
+
+console.log("getPost(valid): ");
+console.log(myPosts.getPost("5"));
+console.log("getPost(invalid): ");
+console.log(myPosts.getPost("1337"));
+
+console.log("addPost(valid): " + myPosts.addPost(testST1));
+console.log("addPost(valid): " + myPosts.addPost(testST2));
+console.log("addPost(valid): " + myPosts.addPost(testST4));
+console.log("addPost(valid): " + myPosts.addPost(testST5));
+
+console.log("posts length after addPost(): " + posts.length);
+console.log("getPost(addedpost): ");
+console.log(myPosts.getPost("21"));
+console.log(myPosts.getPost("22"));
+console.log(myPosts.getPost("23"));
+console.log(myPosts.getPost("24"));
+
+console.log("editPost(valid): " + myPosts.editPost("1", testST2));
+console.log(
+  "editPost(valid): " +
+    myPosts.editPost("20", { description: "new description" })
+);
+
+console.log("getPost(editedpost): ");
+console.log(myPosts.getPost("1"));
+console.log(myPosts.getPost("20"));
+
+console.log("removePost(valid): " + myPosts.removePost("22"));
+console.log("removePost(invalid): " + myPosts.removePost("30"));
+
+console.log("posts length after removePost(): " + posts.length);
+
+console.log("getPosts(0, 10)(valid): ");
+myPosts.getPosts(0, 10).forEach(function(element) {
   console.log(element);
 });
-console.log("getposts(10, 10)(valid): ");
-pl.getposts(10, 10).forEach(function(element) {
+
+console.log("getPosts(10, 10)(valid): ");
+myPosts.getPosts(10, 10).forEach(function(element) {
   console.log(element);
 });
-console.log("validatepost(valid): " + pl.validatepost(pl.getpost("2")));
-console.log("Filter author");
-console.log(pl.getposts(0, 10, { author: "Анна" }));
+
+console.log("getPosts(20, 10)(valid): ");
+myPosts.getPosts(20, 10).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, testFil1)(not found): ");
+myPosts.getPosts(0, 10, testFil1).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, testFil2)(valid): ");
+myPosts.getPosts(0, 10, testFil2).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, testFil3)(valid): ");
+myPosts.getPosts(0, 10, testFil3).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, testFil4)(valid): ");
+myPosts.getPosts(0, 10, testFil4).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, Автор:Анна)(valid): ");
+myPosts.getPosts(0, 10, { author: "Анна" }).forEach(function(element) {
+  console.log(element);
+});
+
+console.log("getPosts(0, 10, Автор по подстроке:Ан)(valid): ");
+myPosts.getPosts(0, 10, { author: "Ан" }).forEach(function(element) {
+  console.log(element);
+});
+
 console.log("Clear posts");
-pl.clear();
-console.log(pl.getposts());
+myPosts.clear();
+console.log(myPosts.getPosts());
+
+console.log("addAll");
+myPosts.addAll(posts);
+console.log("getPosts(0, 10)(valid): ");
+myPosts.getPosts(0, 10).forEach(function(element) {
+  console.log(element);
+});
