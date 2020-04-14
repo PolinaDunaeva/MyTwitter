@@ -85,6 +85,6 @@ public class Post {
 
     public void setLikes(List<String> likes){
         this.likes = likes;
-    }
+    } 
 
 }
