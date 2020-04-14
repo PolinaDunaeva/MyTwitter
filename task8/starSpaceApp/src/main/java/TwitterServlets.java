@@ -1,6 +1,5 @@
 import javax.servlet.annotation.WebServlet;
 import com.google.gson.Gson;
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +12,7 @@ public class TwitterServlets extends HttpServlet {
     private static Posts posts = new Posts();
 
     @Override
-    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json");
         String[] url = request.getRequestURI().split("/");
@@ -21,16 +20,16 @@ public class TwitterServlets extends HttpServlet {
         if (url[2].equals("edit")){ response.getWriter().print((new Gson()).toJson(posts.editPost(request.getParameter("id"), (new Gson()).fromJson(request.getReader().readLine(), Post.class)))); }
     }
 
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String id = request.getParameter("id");
         response.setContentType("application/json");
+        String id = request.getParameter("id");
         response.getWriter().print((new Gson()).toJson(posts.getPost(id)));
     }
 
-
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json");
         String[] url = request.getRequestURI().split("/");
@@ -41,11 +40,11 @@ public class TwitterServlets extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-    protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-
-        String id = request.getParameter("id");
         response.setContentType("application/json");
+        String id = request.getParameter("id");
         response.getWriter().print((new Gson()).toJson(posts.removePost(id)));
     }
 

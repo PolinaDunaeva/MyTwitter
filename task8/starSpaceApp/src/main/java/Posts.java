@@ -16,9 +16,14 @@ public class Posts {
         hashTags.add("Stars");
         hashTags.add("Happiness");
         hashTags.add("beauty");
+        hashTags.add("hello");
+        hashTags.add("test");
+
         likes.add("Polina Dunaeva");
         likes.add("Nekto");
         likes.add("Anya Romanova");
+        likes.add("Max Grin");
+        likes.add("Alena");
 
         this.addPost(new Post("1", "Hi everyone!", new Date(), "Nekto GoOdd",
                 hashTags,"photoLink1", likes));
@@ -26,8 +31,14 @@ public class Posts {
         this.addPost(new Post("2", "Goodbye to All!", new Date(), "Anya Romanova",
                 hashTags,"photoLink2", likes));
 
-        this.addPost(new Post("3", "Ты лучший!", new Date(), "Polina Dunaeva",
+        this.addPost(new Post("3", "You are the best!", new Date(), "Polina Dunaeva",
                 hashTags,"photoLink3", likes));
+
+        this.addPost(new Post("4", "Nice day!", new Date(), "Daylight",
+                hashTags,"photoLink4", likes));
+
+        this.addPost(new Post("5", "Hello", new Date(), "Max Grin",
+                hashTags,"photoLink5", likes));
     }
 
 
@@ -37,7 +48,7 @@ public class Posts {
         if (post.getAuthor() == null || post.getAuthor().length() < 1) {return false;}
         if (post.getCreatedAt() == null) {return false;}
         if (post.getDescription() == null || post.getDescription().length() > 250) {return false;}
-        else return true;
+        return true;
     }
 
 
@@ -75,7 +86,7 @@ public class Posts {
 
     public List<Post> addAllPosts(List<Post> posts){
 
-        List<Post> invalidPosts = new ArrayList<Post>();
+        List<Post> invalidPosts = new ArrayList<>();
         for(Post post: posts) {
             if(isValidate(post)) { this.posts.add(post); }
             else { invalidPosts.add(post); }
