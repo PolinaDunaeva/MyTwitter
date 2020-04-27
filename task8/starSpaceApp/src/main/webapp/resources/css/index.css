@@ -1,5 +1,5 @@
 html {
-    font-size: 12px;
+    font-size: 10px;
 }
 
 @media (max-width: 600px) {
@@ -55,6 +55,62 @@ header .menu {
     margin-bottom: 1.25rem;
 }
 
+
+.add-post-container > textarea {
+    width: calc(100% - 1.6667rem);
+}
+
+
+.add-post-container {
+    padding: 0.8333rem 0.8333rem;
+    border-radius: 1.6667rem;
+    margin-top: 0.8333rem;
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea, select{
+    font-family: 'Roboto Light';
+    font-size: 1.3333rem;
+    padding: 0.4167rem 0.8333rem;
+    border: 0rem;
+    background-color: #ffffff;
+    border-radius: 1.6667rem;
+    resize: none;
+    margin-top: 1.6667rem;
+    margin-left: 0.9rem;
+    margin-right: 0.9rem;
+    box-shadow: inset 0.3333rem 0.3333rem 1rem rgba(0, 0, 0, 0.15), inset -0.4167rem -0.4167rem 1.3333rem rgba(255, 255, 255, 0.5);
+}
+
+.date {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1.6667rem;
+    margin-top: 1.6667rem;
+}
+
+.date > input {
+    margin: 0rem 0.8333rem;
+    max-width: 11.6667rem;
+}
+
+.tags {
+    width: 80%;
+    display: flex;
+    flex-direction: row;
+    overflow-x: scroll;
+    padding: 0.4167rem;
+}
+
+.tags::-webkit-scrollbar {
+    display: none;
+}
+
+.tags > .tag {
+    margin: 0.4167rem;
+}
+
 li {
     list-style-type: none;
     text-align: center;
@@ -91,6 +147,7 @@ li {
     width: 24%;
     margin-left: 1%;
     margin-top: 10rem;
+
 }
 
 .check {
@@ -102,13 +159,15 @@ li {
 
 .filter {
     background-color: #131417;
-    height: 11rem;
+    height: 20rem;
     margin-left: 13%;
     border: 0.167rem solid #fff;
     border-radius: 0.67rem;
     padding-top: 1rem;
     text-align: center;
-    /* display: none; когда добавится js, он будет показывать этот блок при нажатии на кнопку "Поиск".
+    display: flex;
+    flex-direction: column;
+    /* display: none; потом будет показываться этот блок при нажатии на кнопку "Поиск".
        На данный момент я не убирала этот блок, чтобы продемонстрировать его работу*/
 }
 
@@ -217,13 +276,23 @@ p b a{
     font-size: 1.67rem;
 }
 
-.buttonModify {
+.buttonModifyDel {
     border: #d94f54;
     border-radius: 0.4167rem;
     background: #d94f54;
     color: #ffffff;
     cursor: pointer;
     font-size: 1.1rem;
+}
+
+.buttonModifyEd {
+    border: #d94f54;
+    border-radius: 0.4167rem;
+    background: #d94f54;
+    color: #ffffff;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-bottom: 0.7rem;
 }
 
 .Create {
@@ -240,16 +309,23 @@ p b a{
     display: flex;
     flex-direction: column;
     min-height: 100%;
+
+
 }
 
 .footer {
-    flex: 0 0 auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 footer {
     clear: both;
     text-align: center;
     background-color: #131417;
+
+
 }
 
 footer .menu li {
