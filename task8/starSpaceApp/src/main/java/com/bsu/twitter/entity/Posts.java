@@ -1,3 +1,5 @@
+package com.bsu.twitter.entity;
+
 import java.util.Date;
 import java.util.List;
 import java.util.ArrayList;
@@ -98,3 +100,4 @@ public class Posts {
         posts.clear();
     }
 }
+
