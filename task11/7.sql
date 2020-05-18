@@ -1,0 +1,1 @@
+SELECT DATEDIFF (NOW(), DATE(MIN(CREATED_AT))) days_from_an_old_post FROM POST;
