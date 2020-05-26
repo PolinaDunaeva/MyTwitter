@@ -2,11 +2,15 @@ class Model
  {
     _posts = [];
     
-  
     constructor(posts) {
       this._posts = posts || [];
     }
   
+
+    getAll() {
+      return this._posts;
+    }
+
     static _sortByDate(posts) {
       return posts.sort((a, b) =>
         a.createdAt.getTime() > b.createdAt.getTime() ? -1 : 1
@@ -127,5 +131,5 @@ class Model
     clear() {
       this._posts = [];
     }
-  }
+}
   
