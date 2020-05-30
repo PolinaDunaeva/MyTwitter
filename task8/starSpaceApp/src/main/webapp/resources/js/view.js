@@ -62,7 +62,7 @@ static edit(tweet, newPost) {
     post.appendChild(deleteButtonDiv);
 
     deleteButton.onclick = function () {
-      controller.Delete(post.id);
+      controller.delete(post.id);
     };
 
     let userNam = document.createElement("p");

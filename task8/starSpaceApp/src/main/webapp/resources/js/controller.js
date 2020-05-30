@@ -1,6 +1,6 @@
 let controller = (function () {
     return {      
-        Delete(id) {
+        delete(id) {
             console.log(id);
             let result = confirm("Вы уверены?");
             if (result === true) {
